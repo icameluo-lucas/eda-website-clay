@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDA - 课程搜索 (粘土风格)</title>
+    <title>EDA - 课程搜索 (精致粘土风格)</title>
     <style>
         /* 重置和基础样式 */
         * {
@@ -13,90 +13,91 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #262626;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
             min-height: 100vh;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 20px;
         }
         
-        /* 粘土风格基础 - 内阴影 + 圆角 */
+        /* 精致粘土风格 - 柔和的内阴影 + 适度的圆角 */
         .clay-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 24px;
+            background: #ffffff;
+            border-radius: 20px;
             box-shadow: 
-                8px 8px 16px rgba(0, 0, 0, 0.1),
-                -8px -8px 16px rgba(255, 255, 255, 0.9),
-                inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-                inset -2px -2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+                6px 6px 12px rgba(166, 180, 200, 0.15),
+                -6px -6px 12px rgba(255, 255, 255, 0.9),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
         
-        /* 导航栏样式 - 粘土风格 */
+        /* 导航栏样式 - 精致粘土风格 */
         .navbar {
-            padding: 16px 0;
-            margin-bottom: 32px;
+            padding: 20px 0;
+            margin-bottom: 40px;
         }
         
         .navbar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 24px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
+            padding: 16px 28px;
+            background: #ffffff;
+            border-radius: 16px;
             box-shadow: 
-                6px 6px 12px rgba(0, 0, 0, 0.1),
-                -6px -6px 12px rgba(255, 255, 255, 0.9);
+                4px 4px 10px rgba(166, 180, 200, 0.12),
+                -4px -4px 10px rgba(255, 255, 255, 0.9);
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            background: linear-gradient(135deg, #2e8b57, #3cb371);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
         
         .nav-links {
             display: flex;
-            gap: 24px;
+            gap: 8px;
         }
         
         .nav-link {
-            color: #595959;
+            color: #4a5568;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
             padding: 8px 16px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .nav-link:hover, .nav-link.active {
-            color: white;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+            color: #ffffff;
+            background: linear-gradient(135deg, #2e8b57, #3cb371);
+            box-shadow: 2px 2px 6px rgba(46, 139, 87, 0.2);
         }
         
         .search-bar {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 16px;
-            padding: 8px 16px;
-            width: 240px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px 16px;
+            width: 260px;
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.05),
-                inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+                inset 2px 2px 4px rgba(166, 180, 200, 0.1),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.9);
         }
         
         .search-bar input {
@@ -106,215 +107,214 @@
             width: 100%;
             margin-left: 8px;
             font-size: 14px;
-            color: #262626;
+            color: #1a1a2e;
         }
         
         .auth-buttons {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
         
         .btn {
             display: inline-block;
-            padding: 10px 24px;
-            border-radius: 16px;
+            padding: 10px 22px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #2e8b57, #3cb371);
             color: white;
             border: none;
             font-size: 14px;
-            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 3px 3px 8px rgba(46, 139, 87, 0.2);
         }
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 4px 4px 12px rgba(46, 139, 87, 0.3);
         }
         
         /* 页面标题 */
         .page-header {
-            padding: 48px 0 24px;
+            padding: 40px 0 32px;
             text-align: center;
         }
         
         .page-title {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 12px;
+            color: #1a1a2e;
+            letter-spacing: -0.5px;
         }
         
         .page-subtitle {
-            color: #595959;
+            color: #718096;
             font-size: 16px;
+            font-weight: 400;
         }
         
         /* 搜索列表页 */
         .search-page {
             display: flex;
-            gap: 24px;
-            margin-bottom: 48px;
+            gap: 28px;
+            margin-bottom: 60px;
         }
         
         .filters {
-            width: 240px;
-            padding: 24px;
+            width: 260px;
+            padding: 28px;
             height: fit-content;
         }
         
         .filter-section {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         
         .filter-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 16px;
-            color: #262626;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #feca57;
+            margin-bottom: 18px;
+            color: #1a1a2e;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
         }
         
         .filter-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         
         .filter-option {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
             font-size: 14px;
-            color: #595959;
-            padding: 8px 12px;
-            border-radius: 12px;
+            color: #4a5568;
+            padding: 10px 14px;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
         
         .filter-option:hover {
-            background: rgba(255, 255, 255, 0.6);
-            color: #ff6b6b;
+            background: #f8f9fa;
+            color: #2e8b57;
             box-shadow: 
-                inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+                inset 2px 2px 4px rgba(166, 180, 200, 0.08),
                 inset -2px -2px 4px rgba(255, 255, 255, 0.9);
         }
         
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
             flex: 1;
         }
         
         .course-card {
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            background: rgba(255, 255, 255, 0.9);
+            background: #ffffff;
             box-shadow: 
-                8px 8px 16px rgba(0, 0, 0, 0.1),
-                -8px -8px 16px rgba(255, 255, 255, 0.9);
+                6px 6px 12px rgba(166, 180, 200, 0.12),
+                -6px -6px 12px rgba(255, 255, 255, 0.9);
         }
         
         .course-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             box-shadow: 
-                12px 12px 24px rgba(0, 0, 0, 0.15),
-                -12px -12px 24px rgba(255, 255, 255, 0.9);
+                8px 8px 16px rgba(166, 180, 200, 0.18),
+                -8px -8px 16px rgba(255, 255, 255, 0.9);
         }
         
         .course-image {
             width: 100%;
-            height: 160px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            height: 170px;
+            background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 600;
+            font-size: 17px;
             text-align: center;
-            padding: 16px;
+            padding: 20px;
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.1),
-                inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+                inset 2px 2px 4px rgba(0, 0, 0, 0.08),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.2);
         }
         
         .course-content {
-            padding: 20px;
+            padding: 22px;
         }
         
         .course-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: #262626;
-            line-height: 1.4;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
         }
         
         .course-stats {
             display: flex;
             justify-content: space-between;
-            margin-top: 16px;
-            color: #8c8c8c;
-            font-size: 14px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 18px;
+            color: #a0aec0;
+            font-size: 13px;
+            padding-top: 14px;
+            border-top: 1px solid #e2e8f0;
         }
         
         .stat-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            font-weight: 500;
         }
         
         /* 页脚 */
         .footer {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 48px 0 24px;
-            margin-top: 48px;
+            background: #ffffff;
+            padding: 56px 0 32px;
+            margin-top: 60px;
             border-radius: 24px 24px 0 0;
             box-shadow: 
-                0 -4px 8px rgba(0, 0, 0, 0.05),
-                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+                0 -4px 12px rgba(166, 180, 200, 0.08),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8);
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-            margin-bottom: 32px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
         
         .footer-column h4 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 18px;
+            color: #1a1a2e;
+            letter-spacing: -0.3px;
         }
         
         .footer-links {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         
         .footer-link {
-            color: #595959;
+            color: #718096;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s ease;
@@ -322,20 +322,20 @@
         }
         
         .footer-link:hover {
-            color: #ff6b6b;
-            transform: translateX(4px);
+            color: #2e8b57;
+            transform: translateX(6px);
         }
         
         .footer-bottom {
             text-align: center;
-            padding-top: 24px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            color: #8c8c8c;
-            font-size: 14px;
+            padding-top: 32px;
+            border-top: 1px solid #e2e8f0;
+            color: #a0aec0;
+            font-size: 13px;
         }
         
         /* 响应式设计 */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .search-page {
                 flex-direction: column;
             }
@@ -349,24 +349,38 @@
             }
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
             .nav-links {
-                display: none;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .search-bar {
-                width: 160px;
+                width: 100%;
+                max-width: 320px;
             }
             
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .auth-buttons {
                 display: none;
             }
             
             .course-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
                 grid-template-columns: 1fr;
             }
         }
@@ -386,7 +400,7 @@
             </div>
             <div class="search-bar">
                 <span>🔍</span>
-                <input type="text" placeholder="搜索">
+                <input type="text" placeholder="搜索课程...">
             </div>
             <div class="auth-buttons">
                 <a href="login.html" class="btn">登录/注册</a>
@@ -398,13 +412,13 @@
     <section class="container">
         <div class="page-header">
             <h1 class="page-title">课程搜索</h1>
-            <p class="page-subtitle">找到适合你的优质课程</p>
+            <p class="page-subtitle">发现适合你的优质教育资源，开启终身学习之旅</p>
         </div>
         
         <div class="search-page">
             <div class="filters clay-card">
                 <div class="filter-section">
-                    <h3 class="filter-title">分类</h3>
+                    <h3 class="filter-title">学习领域</h3>
                     <div class="filter-options">
                         <label class="filter-option">
                             <input type="checkbox"> 专业提升
@@ -422,7 +436,7 @@
                 </div>
                 
                 <div class="filter-section">
-                    <h3 class="filter-title">标签</h3>
+                    <h3 class="filter-title">技术标签</h3>
                     <div class="filter-options">
                         <label class="filter-option">
                             <input type="checkbox"> 人工智能
@@ -443,19 +457,19 @@
                 </div>
                 
                 <div class="filter-section">
-                    <h3 class="filter-title">排序</h3>
+                    <h3 class="filter-title">排序方式</h3>
                     <div class="filter-options">
                         <label class="filter-option">
-                            <input type="radio" name="sort"> 默认排序
+                            <input type="radio" name="sort"> 综合推荐
                         </label>
                         <label class="filter-option">
-                            <input type="radio" name="sort"> 最新发布
+                            <input type="radio" name="sort"> 按热度
                         </label>
                         <label class="filter-option">
-                            <input type="radio" name="sort"> 最受欢迎
+                            <input type="radio" name="sort"> 按最新
                         </label>
                         <label class="filter-option">
-                            <input type="radio" name="sort"> 评分最高
+                            <input type="radio" name="sort"> 按好评
                         </label>
                     </div>
                 </div>
@@ -468,44 +482,68 @@
                     <div class="course-content">
                         <h3 class="course-title">AI 剧本创作实务</h3>
                         <div class="course-stats">
-                            <div class="stat-item">👥 2092 人学习</div>
-                            <div class="stat-item">⏱️ 2 课时</div>
+                            <div class="stat-item">
+                                <span>👥</span>
+                                <span>2,092 人学习</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>⏱️</span>
+                                <span>2 课时</span>
+                            </div>
                         </div>
                     </div>
                 </a>
                 
                 <!-- 课程卡片 2 -->
                 <a href="detail.html" class="course-card">
-                    <div class="course-image">Midjourney 图像生成高级技术</div>
+                    <div class="course-image">Midjourney 图像生成</div>
                     <div class="course-content">
                         <h3 class="course-title">Midjourney 图像生成高级技术</h3>
                         <div class="course-stats">
-                            <div class="stat-item">👥 2036 人学习</div>
-                            <div class="stat-item">⏱️ 9 课时</div>
+                            <div class="stat-item">
+                                <span>👥</span>
+                                <span>2,036 人学习</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>⏱️</span>
+                                <span>9 课时</span>
+                            </div>
                         </div>
                     </div>
                 </a>
                 
                 <!-- 课程卡片 3 -->
                 <a href="detail.html" class="course-card">
-                    <div class="course-image">设计策展：策划元宇宙</div>
+                    <div class="course-image">设计策展：元宇宙</div>
                     <div class="course-content">
                         <h3 class="course-title">设计策展：策划元宇宙</h3>
                         <div class="course-stats">
-                            <div class="stat-item">👥 4368 人学习</div>
-                            <div class="stat-item">⏱️ 1 课时</div>
+                            <div class="stat-item">
+                                <span>👥</span>
+                                <span>4,368 人学习</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>⏱️</span>
+                                <span>1 课时</span>
+                            </div>
                         </div>
                     </div>
                 </a>
                 
                 <!-- 课程卡片 4 -->
                 <a href="detail.html" class="course-card">
-                    <div class="course-image">电子商务基础课程</div>
+                    <div class="course-image">电子商务基础</div>
                     <div class="course-content">
                         <h3 class="course-title">电子商务基础课程</h3>
                         <div class="course-stats">
-                            <div class="stat-item">👥 132 人学习</div>
-                            <div class="stat-item">⏱️ 32 课时</div>
+                            <div class="stat-item">
+                                <span>👥</span>
+                                <span>132 人学习</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>⏱️</span>
+                                <span>32 课时</span>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -554,31 +592,29 @@
             </div>
             
             <div class="footer-bottom">
-                Copyright © 2022 EDA All Rights Reserved. 闽 ICP 备 12022411 号 -7 联系方式：edacn@101.com
+                Copyright © 2026 EDA All Rights Reserved. 闽 ICP 备 12022411 号 -7 联系方式：edacn@101.com
             </div>
         </div>
     </footer>
 
     <script>
-        // 交互功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 课程卡片点击
-            const courseCards = document.querySelectorAll('.course-card');
-            courseCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.location.href = 'detail.html';
-                });
-            });
-            
-            // 导航链接激活
+            // 导航激活状态
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-                    window.location.href = this.getAttribute('href');
+                });
+            });
+            
+            // 课程卡片点击
+            const courseCards = document.querySelectorAll('.course-card');
+            courseCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'detail.html';
                 });
             });
         });

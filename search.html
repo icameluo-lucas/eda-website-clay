@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA - 课程搜索 (粘土风格)</title>
+    <style>
+        /* 重置和基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #262626;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        
+        /* 粘土风格基础 - 内阴影 + 圆角 */
+        .clay-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.9),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 导航栏样式 - 粘土风格 */
+        .navbar {
+            padding: 16px 0;
+            margin-bottom: 32px;
+        }
+        
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 
+                6px 6px 12px rgba(0, 0, 0, 0.1),
+                -6px -6px 12px rgba(255, 255, 255, 0.9);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-link {
+            color: #595959;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 8px 16px;
+            width: 240px;
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.05),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            margin-left: 8px;
+            font-size: 14px;
+            color: #262626;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            font-size: 14px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            padding: 48px 0 24px;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            color: #595959;
+            font-size: 16px;
+        }
+        
+        /* 搜索列表页 */
+        .search-page {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .filters {
+            width: 240px;
+            padding: 24px;
+            height: fit-content;
+        }
+        
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #262626;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #feca57;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #595959;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            background: rgba(255, 255, 255, 0.6);
+            color: #ff6b6b;
+            box-shadow: 
+                inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            flex: 1;
+        }
+        
+        .course-card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.9);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                12px 12px 24px rgba(0, 0, 0, 0.15),
+                -12px -12px 24px rgba(255, 255, 255, 0.9);
+        }
+        
+        .course-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            padding: 16px;
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+        }
+        
+        .course-content {
+            padding: 20px;
+        }
+        
+        .course-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #262626;
+            line-height: 1.4;
+        }
+        
+        .course-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            color: #8c8c8c;
+            font-size: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 48px 0 24px;
+            margin-top: 48px;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 
+                0 -4px 8px rgba(0, 0, 0, 0.05),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .footer-column h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .footer-link {
+            color: #595959;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            padding: 4px 0;
+        }
+        
+        .footer-link:hover {
+            color: #ff6b6b;
+            transform: translateX(4px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: #8c8c8c;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .search-page {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .search-bar {
+                width: 160px;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+            
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="search.html" class="logo">EDA</a>
+            <div class="nav-links">
+                <a href="search.html" class="nav-link active">首页</a>
+                <a href="search.html" class="nav-link">课程频道</a>
+                <a href="#" class="nav-link">前沿资讯</a>
+                <a href="#" class="nav-link">共创未来</a>
+                <a href="#" class="nav-link">技能变现</a>
+            </div>
+            <div class="search-bar">
+                <span>🔍</span>
+                <input type="text" placeholder="搜索">
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn">登录/注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 搜索列表页 -->
+    <section class="container">
+        <div class="page-header">
+            <h1 class="page-title">课程搜索</h1>
+            <p class="page-subtitle">找到适合你的优质课程</p>
+        </div>
+        
+        <div class="search-page">
+            <div class="filters clay-card">
+                <div class="filter-section">
+                    <h3 class="filter-title">分类</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> 专业提升
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 职场技能
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 社会教育
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 兴趣爱好
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">标签</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> 人工智能
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 产品设计
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 程序设计
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 公民教育
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> 健康教育
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">排序</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="radio" name="sort"> 默认排序
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort"> 最新发布
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort"> 最受欢迎
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort"> 评分最高
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-grid">
+                <!-- 课程卡片 1 -->
+                <a href="detail.html" class="course-card">
+                    <div class="course-image">AI 剧本创作实务</div>
+                    <div class="course-content">
+                        <h3 class="course-title">AI 剧本创作实务</h3>
+                        <div class="course-stats">
+                            <div class="stat-item">👥 2092 人学习</div>
+                            <div class="stat-item">⏱️ 2 课时</div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 课程卡片 2 -->
+                <a href="detail.html" class="course-card">
+                    <div class="course-image">Midjourney 图像生成高级技术</div>
+                    <div class="course-content">
+                        <h3 class="course-title">Midjourney 图像生成高级技术</h3>
+                        <div class="course-stats">
+                            <div class="stat-item">👥 2036 人学习</div>
+                            <div class="stat-item">⏱️ 9 课时</div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 课程卡片 3 -->
+                <a href="detail.html" class="course-card">
+                    <div class="course-image">设计策展：策划元宇宙</div>
+                    <div class="course-content">
+                        <h3 class="course-title">设计策展：策划元宇宙</h3>
+                        <div class="course-stats">
+                            <div class="stat-item">👥 4368 人学习</div>
+                            <div class="stat-item">⏱️ 1 课时</div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 课程卡片 4 -->
+                <a href="detail.html" class="course-card">
+                    <div class="course-image">电子商务基础课程</div>
+                    <div class="course-content">
+                        <h3 class="course-title">电子商务基础课程</h3>
+                        <div class="course-stats">
+                            <div class="stat-item">👥 132 人学习</div>
+                            <div class="stat-item">⏱️ 32 课时</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>学习新知识</h4>
+                    <div class="footer-links">
+                        <a href="search.html" class="footer-link">热门</a>
+                        <a href="search.html" class="footer-link">专业提升</a>
+                        <a href="search.html" class="footer-link">职场技能</a>
+                        <a href="search.html" class="footer-link">社会教育</a>
+                        <a href="search.html" class="footer-link">兴趣爱好</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>产品与服务</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">学习目标百科</a>
+                        <a href="#" class="footer-link">EDA 新视听创作大赛</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>法律与合规</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">用户协议</a>
+                        <a href="#" class="footer-link">隐私政策</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">微信公众号</a>
+                        <a href="#" class="footer-link">联系我们</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                Copyright © 2022 EDA All Rights Reserved. 闽 ICP 备 12022411 号 -7 联系方式：edacn@101.com
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 课程卡片点击
+            const courseCards = document.querySelectorAll('.course-card');
+            courseCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'detail.html';
+                });
+            });
+            
+            // 导航链接激活
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    window.location.href = this.getAttribute('href');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
